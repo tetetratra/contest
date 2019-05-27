@@ -1,42 +1,14 @@
 N, M = gets.chomp.split.map(&:to_i) # N個のスイッチ, Mの電球
 a = []
 c = []
-M.times do |m|
+M.times do |_m|
   g = gets.split.map(&:to_i)
-  a << [*g[1..-1]]
-  c << g[0]
+  c << g[0] # 電球に紐づくスイッチの個数
+  a << [*g[1..-1]] # 電球に紐づくスイッチ
 end
-b = gets.split.map(&:to_i)
-
-p N, M
-pp a
-pp b
-pp c
-puts
+b = gets.split.map(&:to_i) # i番目の電球が、紐づくスイッチのうちONのものを2で割ってこれに一致したら、点灯する
 count = 0
-
-comb_flag = true
-[true, false].repeated_permutation(M) do |arr| # arrには, M 個の {T, F}の組み合わせ
-  comb_flag = true
-  puts
-  p arr
-  a.each_with_index do |aa, ii|
-
-    # print'aa->'
-    # p aa
-    # p arr.values_at(*aa.map{|aaa|aaa-1})
-    # p arr.values_at(*aa.map{|aaa|aaa-1}).select{|aa|aa}
-    # p b[ii]
-    # p 'last!' if (ii == a.size - 1)
-    # p (arr.values_at(*aa.map{|aaa|aaa-1}).select{|aa|aa}.size % 2 == b[ii])
-
-    if (arr.values_at(*aa.map{|aaa|aaa-1}).select{|aa|aa}.size % 2 == b[ii])
-      count += 1 if (ii == a.size - 1) && comb_flag
-    else
-      comb_flag = false
-    end
-  end
+[true, false].repeated_permutation(N) do |sw| # arrには, M 個の {T, F}の組み合わせ
+  count += 1 if a.map.with_index { |aa, aai| sw.select.with_index { |_s, i| aa.include?(i + 1) }.select { |s| s }.size % 2 == b[aai] }.all? { |a| a }
 end
-
-puts "こたえ"
 p count

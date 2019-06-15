@@ -1,9 +1,6 @@
-a, b, c = gets.split.map &:to_i
-
-n = gets.to_i
-s = gets.split(//)
-
-arr = []
-while g = gets
-  arr << g.split.map(&:to_i)
+n, k = gets.split.map &:to_i
+if k == 1
+  p 0
+else
+  p(n - k)
 end

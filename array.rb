@@ -15,4 +15,8 @@ class Array
     result.delete_if(&:empty?)
     result
   end
+
+  def sum
+    self.inject(&:+)
+  end
 end

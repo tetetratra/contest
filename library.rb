@@ -1,3 +1,14 @@
+a, b, c = gets.split.map &:to_i
+
+n = gets.to_i
+s = gets.split(//)
+
+arr = []
+while g = gets
+  arr << g.split.map(&:to_i)
+end
+
+=begin
 class Integer
   def combination(k = self)
     return 1 if k.zero?
@@ -71,3 +82,5 @@ ruiseki = arr.ruiseki_set{|item, memo| memo+item}
 p ruiseki[0]
 # p ruiseki[1]
 p ruiseki.ruiseki_find{|left,right,i| left[i+1] - left[i] }
+=end
+

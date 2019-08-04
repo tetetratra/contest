@@ -1,3 +1,4 @@
+cd atcoder
 mkdir $1 || exit
 cd $1
 
@@ -27,56 +28,6 @@ touch d/2
 touch d/3
 
 
-cat << EOS >> a/a.rb
-a, b, c = gets.split.map &:to_i
-
-n = gets.to_i
-s = gets.split(//)
-
-arr = []
-while g = gets
-  arr << g.split.map(&:to_i)
-end
-EOS
-
-
-cat << EOS >> b/b.rb
-a, b, c = gets.split.map &:to_i
-
-n = gets.to_i
-s = gets.split(//)
-
-arr = []
-while g = gets
-  arr << g.split.map(&:to_i)
-end
-EOS
-
-
-cat << EOS >> c/c.rb
-a, b, c = gets.split.map &:to_i
-
-n = gets.to_i
-s = gets.split(//)
-
-arr = []
-while g = gets
-  arr << g.split.map(&:to_i)
-end
-EOS
-
-
-cat << EOS >> d/d.rb
-a, b, c = gets.split.map &:to_i
-
-n = gets.to_i
-s = gets.split(//)
-
-arr = []
-while g = gets
-  arr << g.split.map(&:to_i)
-end
-EOS
-
+cat ~/programing/contest/library.rb | tee b/b.rb | tee a/a.rb | tee c/c.rb > d/d.rb
 
 echo "SET UP OK!!"

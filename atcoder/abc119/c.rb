@@ -4,3 +4,6 @@ l = []
 while a = gets
   l << a.to_i
 end
+
+point = 0
+

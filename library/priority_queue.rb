@@ -1,10 +1,9 @@
 require 'pp'
 
-class Heap
-  attr_reader :heap
-
-  def initialize
+class PriorityQueue
+  def initialize(array = [])
     @heap = []
+    array.each { |a| push(a) }
   end
 
   def size
@@ -22,19 +21,12 @@ class Heap
     self
   end
 
-
   def pop
-    # return nil if size.zero?
-    # return @heap.delete_at(0) if size == 1
-
-
     case size
     when 0 then return nil
     when 1 then return @heap.delete_at(0)
     when 2 then return @heap[0] > @heap[1] ? @heap.delete_at(0) : @heap.delete_at(1)
     end
-
-
     popped = @heap[0]
     @heap[0] = @heap.delete_at(-1)
     index = 0
@@ -74,15 +66,38 @@ class Heap
   alias :rci :right_child_index
 end
 
-heap = Heap.new
+class PriorityQueueWithoutHeap
+  def initialize(array = [])
+    @data = []
+    array.each{|a| push(a)}
+  end
 
-arr = []
-10.times do
-  heap << rand(19)
+  def push(element)
+    @data.push(element)
+  end
+
+  def pop
+    @data.sort!.shift
+  end
 end
-10.times do
-  arr << heap.pop
+
+require 'benchmark'
+@test_data = 100_000.times.map{rand(100_000)}
+@test_cnt = 1_000
+Benchmark.bm 10 do |r|
+  r.report 'PQWH' do
+    pq = PriorityQueueWithoutHeap.new(@test_data)
+    @test_cnt.times do
+      pq.push(rand(100_000))
+      pq.pop
+    end
+  end
+
+  r.report 'PQ' do
+    pq = PriorityQueue.new(@test_data)
+    @test_cnt.times do
+      pq.push(rand(100_000))
+      pq.pop
+    end
+  end
 end
-p a1 = arr
-p a2 = arr.sort.reverse
-p a1 == a2

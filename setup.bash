@@ -1,4 +1,4 @@
-cd atcoder
+cd ~/programing/contest/atcoder
 mkdir $1 || exit
 cd $1
 

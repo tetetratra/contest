@@ -1,11 +1,2 @@
-require 'pp'
-a, b, c = gets.split.map &:to_i
-n = gets.to_i
-s = gets.split(//)
-arr = []
-while g = gets
-  arr << g.to_i
-  arr << g.split.map(&:to_i)
-  arr << g.chars
-end
-p a,b,c,s,n
+n=gets.to_i
+p -gets.split.map(&:to_i).min(n/2+1)[-2..-1].inject(&:-)

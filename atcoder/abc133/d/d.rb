@@ -1,11 +1,12 @@
 require 'pp'
-a, b, c = gets.split.map &:to_i
+# 4 0 4
+# 2 4 12 2 8
+
 n = gets.to_i
-s = gets.split(//)
-arr = []
-while g = gets
-  arr << g.to_i
-  arr << g.split.map(&:to_i)
-  arr << g.chars
+a = gets.split.map(&:to_i)
+yama = Array.new(n,nil)
+yama[0] = a.map.with_index{|a, i|i.even? ? a : -a}.inject(&:+)
+1.upto(n-1) do |i|
+  yama[i] = 2 * a[i-1]- yama[i-1]
 end
-p a,b,c,s,n
+puts yama.join(' ')

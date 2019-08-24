@@ -1,22 +1,9 @@
-require 'pp'
-# require 'prime'
-# require 'matrix'
-# require 'cmath'
-# require 'set'
-class Object
-  def yield_self(*args)
-    yield(self, *args)
-  end
-  alias :then :yield_self
-end
-
-a, b, c = gets.split.map &:to_i
-n = gets.to_i
-s = gets.split(//)
-arr = []
-while g = gets
-  arr << g.to_i
-  arr << g.split.map(&:to_i)
-  arr << g.chars
-end
-p a,b,c,s,n
+puts gets.scan(/R+L+/).map{|a|a.split(/(?<=R)(?=L)/)}
+.map{|a|
+  [
+    '0 ' * (a[0].size-1),
+    ((a[0].size/2.0).ceil + (a[1].size/2.0).floor).to_s + ' ',
+    ((a[0].size/2.0).floor + (a[1].size/2.0).ceil).to_s + ' ',
+    ('0 ' * (a[1].size-1))
+  ].join
+}.join.chop

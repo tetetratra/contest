@@ -1,16 +1,11 @@
 l, r = gets.split.map{|a|a.to_i}
-if (l..r).any?{|a|a%2019 == 0}
+if r - l >= 2019 || (l % 2019) > (r % 2019)
   p 0
   exit
 end
-p (l % 2019) * ((l+1) % 2019)
-
-
-# res = []
-# l.upto(r) do |i|
-#   (i+1).upto(r) do |j|
-#     res << [i,j]
-#   end
-# end
-# pp res.map{|i|i.inject(&:*) % 2019}.size
-# 2 20
+p ((l % 2019)..(r % 2019)).to_a
+.product(
+  ((l % 2019)..(r % 2019)).to_a
+)
+.select{|a|a[0] < a[1]}
+.map {|a|a.inject(&:*)}.min

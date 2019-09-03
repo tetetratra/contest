@@ -1,7 +1,8 @@
 require 'pp'
 class PriorityQueue
   def initialize(array = [], &cmp)
-    @cmp = cmp || Proc.new { |small, big| small < big }
+    # topとbottomの関係を書く. デフォルトでは大きい順に出てくる
+    @cmp = cmp || Proc.new { |bottom, top| bottom < top }
     @heap = []
     array.each { |a| push(a) }
   end
@@ -15,14 +16,15 @@ class PriorityQueue
   end
 
   def inspect # デバック用
-    @heap.sort.join(' < ')
+    tmp = Proc.new { |a,b| @cmp.call(a, b) ? 1 : 0 }
+    @heap.sort(&tmp).inspect
   end
 
   def push(x)
     @heap << x
     index = size - 1
     while(@cmp.call(@heap[pi(index)],@heap[index]))
-      @heap[pi(index)], @heap[index] = @heap[index], @heap[pi(index)]
+      swap!(pi(index), index)
       index = pi(index)
       break if index == 0
     end
@@ -63,7 +65,8 @@ class PriorityQueue
   end
 
   def parent_index(i)
-    i.odd? ? ((i+1)/2)-1 : (i/2)-1
+    ((i+1)/2)-1
+    # i.odd? ? ((i+1)/2)-1 : (i/2)-1
   end
 
   def left_child_index(i)

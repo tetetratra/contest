@@ -1,4 +1,3 @@
-require 'pp'
 class PriorityQueue
   def initialize(&cmp)
     # topとbottomの関係を書く. デフォルトでは大きい順に出てくる
@@ -79,21 +78,3 @@ class PriorityQueue
   # alias :lci :left_child_index
   # alias :rci :right_child_index
 end
-
-pq = PriorityQueue.new { |bottom, top| bottom[1] < top[1] }
-n, m = gets.split.map &:to_i
-ab = []
-n.times do |i|
-  ab << gets.split.map(&:to_i) # 日、金
-end
-
-ab = ab.group_by{|a|a[0]}
-res = 0
-1.upto m do |i|
-  if ab[i]
-    ab[i].each{|a|pq << a}
-  end
-  tmp = pq.pop
-  res += tmp ? tmp[1] : 0
-end
-p res

@@ -1,1 +1,0 @@
-/Users/kondodaichi/programing/contest/setup.bash

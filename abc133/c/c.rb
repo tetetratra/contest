@@ -1,11 +1,11 @@
-l, r = gets.split.map{|a|a.to_i}
-if r - l >= 2019 || (l % 2019) > (r % 2019)
+l, r = gets.split.map(&:to_i)
+if r - l >= 2018
   p 0
   exit
 end
-p ((l % 2019)..(r % 2019)).to_a
-.product(
-  ((l % 2019)..(r % 2019)).to_a
-)
-.select{|a|a[0] < a[1]}
-.map {|a|a.inject(&:*)}.min
+arr = []
+tmp = (l..r).to_a
+tmp.product(tmp).select{|a|a[0] < a[1]}.each do |(a,b)|
+  arr << (a*b) % 2019
+end
+p arr.min

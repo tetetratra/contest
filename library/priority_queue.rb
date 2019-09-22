@@ -1,83 +1,119 @@
 require 'pp'
 class PriorityQueue
-  def initialize(array = [], &cmp)
-    # topとbottomの関係を書く. デフォルトでは大きい順に出てくる
-    @cmp = cmp || Proc.new { |bottom, top| bottom < top }
-    @heap = []
-    array.each { |a| push(a) }
+  attr_accessor :data
+  def initialize(array = [], cmp = nil)
+    @cmp = cmp || Proc.new{ |a,b| a < b }
+    @data = []
+    array.each{|a| self << a}
   end
 
-  def size
-    @heap.size
+  def <<(element)
+    @data.push(element)
+    bottom_up
   end
+  alias :push :<<
 
-  def empty?
-    @heap.size == 0
-  end
-
-  def inspect # デバック用
-    tmp = Proc.new { |a,b| @cmp.call(a, b) ? 1 : 0 }
-    @heap.sort(&tmp).inspect
-  end
-
-  def push(x)
-    @heap << x
-    index = size - 1
-    while(@cmp.call(@heap[pi(index)],@heap[index]))
-      swap!(pi(index), index)
-      index = pi(index)
-      break if index == 0
-    end
-    self
+  def peek
+    @data[0]
   end
 
   def pop
-    case size
-    when 0 then return nil
-    when 1 then return @heap.delete_at(0)
-    when 2 then return @cmp.call(@heap[1], @heap[0]) ? @heap.delete_at(0) : @heap.delete_at(1)
+    if size == 0
+      return nil
+    elsif size == 1
+      return @data.pop
+    else
+      min = @data[0]
+      @data[0] = @data.pop
+      top_down
+      return min
     end
-    popped = @heap[0]
-    @heap[0] = @heap.delete_at(-1)
-    index = 0
-    loop do
-      break if lci(index) >= size || rci(index) >= size
-      if @cmp.call(@heap[rci(index)], @heap[lci(index)]) && @cmp.call(@heap[index], @heap[lci(index)])
-        swap!(lci(index), index)
-        index = lci(index)
-      elsif !(@cmp.call(@heap[rci(index)], @heap[lci(index)])) && @cmp.call(@heap[index], @heap[rci(index)])
-        swap!(rci(index), index)
-        index = rci(index)
-      else
-        break
-      end
-    end
-    popped
   end
 
-  alias :<< :push
+  # @return Integer
+  def size
+    @data.size
+  end
+
+  def empty?
+    @data.size == 0
+  end
+
+  def inspect
+    arr = []
+    while self.empty?.!
+      arr << self.pop
+    end
+    str = arr.pretty_inspect
+    arr.each {|a| self << a }
+    str
+  end
 
   private
 
-  def swap!(a, b)
-    @heap[a], @heap[b] = @heap[b], @heap[a]
-    nil
+  def swap(i, j)
+    @data[i], @data[j] = @data[j], @data[i]
   end
 
-  def parent_index(i)
-    ((i+1)/2)-1
-    # i.odd? ? ((i+1)/2)-1 : (i/2)-1
+  def bottom_up
+    idx = size - 1
+    while(has_parent?(idx))
+      parent_idx = parent_idx(idx)
+      if @cmp.call(@data[idx],@data[parent_idx])
+        swap(parent_idx, idx)
+        idx = parent_idx
+      else
+        return
+      end
+    end
   end
 
-  def left_child_index(i)
-    i*2 + 1
+  def top_down
+    idx = 0
+    while (has_child?(idx))
+      a = left_child_idx(idx)
+      b = right_child_idx(idx)
+      if @data[b].nil?
+        c = a
+      else
+        c = @cmp.call(@data[a], @data[b]) ? a : b
+      end
+      if @cmp.call(@data[c], @data[idx])
+        swap(idx, c)
+        idx = c
+      else
+        return
+      end
+    end
   end
 
-  def right_child_index(i)
-    i*2 + 2
+  def parent_idx(idx)
+    (idx - (idx.even? ? 2 : 1)) / 2
   end
 
-  alias :pi :parent_index
-  alias :lci :left_child_index
-  alias :rci :right_child_index
+  def left_child_idx(idx)
+    (idx * 2) + 1
+  end
+
+  def right_child_idx(idx)
+    (idx * 2) + 2
+  end
+
+  def has_child?(idx)
+    ((idx * 2) + 1) < @data.size
+  end
+
+  def has_parent?(idx)
+    idx > 0
+  end
 end
+
+arr = Array.new(20){ [rand(2), rand(10)] }
+f = Proc.new{|a,b| a[0] != b[0] ? a[0] < b[0] : a[1] < b[1]}
+pq = PriorityQueue.new(arr, f)
+pp pq
+arr2 = []
+while pq.empty?.!
+  arr2 << pq.pop
+end
+pp arr2

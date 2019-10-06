@@ -7,6 +7,6 @@ s = gets.chomp.chars
 arr = []
 n.times do
   arr << gets.to_i
-  arr << gets.split.map(&:to_i)
+  arr << gets.spilt.map(&:to_i)
   arr << gets.chomp.chars
 end

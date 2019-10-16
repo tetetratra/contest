@@ -1,9 +1,10 @@
-require 'pp'
-h, w = gets.split.map(&:to_i)
+h, w = read_line.split.map(&.to_i)
 
-s = []
-h.times do
-  s << gets.chomp.chars
+s = Array.new(h){Array(Char).new(w)}
+# pp s
+
+h.times do |hi|
+  s[hi] = read_line.chomp.chars
 end
 # pp s
 # 4 * 10**6
@@ -25,12 +26,12 @@ end
 
 h.times do |hi|
   (w-2).downto(0) do |wi|
-    if s[hi][wi] == '.'
-      ss[hi][wi] = ss[hi][wi+1] if ss[hi][wi] < ss[hi][wi+1]
+    if s[hi][wi] == '.' && s[hi][wi+1] == '.'
+      ss[hi][wi] = ss[hi][wi+1] #if ss[hi][wi] < ss[hi][wi+1]
     end
   end
 end
-# pp ss;puts '-----------'
+# pp ss
 
 sss = Array.new(h){Array.new(w, 0)}
 
@@ -48,8 +49,8 @@ end
 
 (h-2).downto(0) do |hi|
   w.times do |wi|
-    if s[hi][wi] == '.'
-      sss[hi][wi] = sss[hi+1][wi] if sss[hi][wi] < sss[hi+1][wi]
+    if s[hi][wi] == '.' && s[hi+1][wi] == '.'
+      sss[hi][wi] = sss[hi+1][wi] #if sss[hi][wi] < sss[hi+1][wi]
     end
   end
 end
@@ -68,7 +69,4 @@ h.times do |hi|
 end
 # pp tmp
 p max
-
-
-
 # 8 13

@@ -1,24 +1,31 @@
+# 2, 3, 36
 n, k = gets.split.map &:to_i
 a = gets.split.map &:to_i
-# int l = 0, r = 0;
-# while(r < n){
-#     (rを1個右に動かす)
-#     while(l < r && (条件を満たさない)) (lを1個右に動かす);
-#     ans = max(ans, r-l); // (条件を満たす区間の最大値を求める場合)
-# }
+# p a
+arr = Array.new(n, 0)
+arr[0] = a[0] >= k ? 1 : 0
 
-
-# 和がｋ"以下"を調べよう。
-p a
-p k
-p '----'
-
-cnt = 0
-sum = 0
-l = 0
-r = 0
-
-
-while l <= n
-
+ruiseki_arr = []
+ruiseki_num = 0
+n.times do |i|
+  ruiseki_num += a[i]
+  ruiseki_arr << ruiseki_num
 end
+# p ruiseki_arr
+
+1.upto(n-1) do |i|
+  tmp = 0
+  (i+1).times do |ii|
+    # p a[ii..i]
+    # p [ii, i]
+
+    summ = a[ii..i].inject(&:+) # とてもおそいとてもおそいおそいおそいおそい
+
+    tmp += 1 if summ >= k
+  end
+
+  arr[i] = arr[i-1] + tmp
+end
+# p arr
+
+p arr[-1]

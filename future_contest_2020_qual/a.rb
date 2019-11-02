@@ -22,62 +22,65 @@ c.map!{|cc|
   cc[gx..(-1)] + cc[0..(gx-1)]
 }
 
-n.times do |y|
-  n.times do |x|
-    next if c[y][x] == 'G'
-    if (0 <= y && y < n/2)
-      if (0 <= x && x < n/2) # 左上
-        if (y > x) # 左上の|\
-          if c[y-1][x] == 'x' && c[y][x-1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
+5.times do
+  n.times do |y|
+    n.times do |x|
+      next if c[y][x] == 'G'
+      if (0 <= y && y < n/2)
+        if (0 <= x && x < n/2) # 左上
+          if (y > x) # 左上の|\
+            if c[y-1][x] == 'x' && c[y][x-1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          elsif(x > y) # 左上の\|
+            if c[y-1][x] == 'x' && c[y][x-1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          else # 左上の\の線
           end
-        elsif(x > y) # 左上の\|
-          if c[y-1][x] == 'x' && c[y][x-1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
+        else # 右上
+          if (y < n-x) # 右上の/|
+            if c[y-1][x] == 'x' && c[y][x+1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          elsif(y > n-x) # 右上の|/
+            if c[y-1][x] == 'x' && c[y][x+1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          else # 右上の/の線
+            #
           end
-        else # 左上の\の線
         end
-      else # 右上
-        if (y < n-x) # 右上の/|
-          if c[y-1][x] == 'x' && c[y][x+1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
+      else
+        if (0 <= x && x < n/2) # 左下
+          if (y < n-x) # 左下の|/
+            if c[y+1] && c[y+1][x] == 'x' && c[y][x-1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          elsif(y > n-x) # 左下の/|
+            if c[y+1] && c[y+1][x] == 'x' && c[y][x-1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          else # 左下の/の線
+            #
           end
-        elsif(y > n-x) # 右上の|/
-          if c[y-1][x] == 'x' && c[y][x+1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
+        else # 右下
+          if (y < x) # 右下の\|
+            if c[y+1] && c[y+1][x] == 'x' && c[y][x+1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          elsif(y > x) # 右下の|/
+            if c[y+1] && c[y+1][x] == 'x' && c[y][x+1] == 'x'
+              c[y][x] = '*' unless c[y][x] == 'x'
+            end
+          else # 右下の/の線
+            #
           end
-        else # 右上の/の線
-          #
-        end
-      end
-    else
-      if (0 <= x && x < n/2) # 左下
-        if (y < n-x) # 左下の|/
-          if c[y+1] && c[y+1][x] == 'x' && c[y][x-1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
-          end
-        elsif(y > n-x) # 左下の/|
-          if c[y+1] && c[y+1][x] == 'x' && c[y][x-1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
-          end
-        else # 左下の/の線
-          #
-        end
-      else # 右下
-        if (y < x) # 右下の\|
-          if c[y+1] && c[y+1][x] == 'x' && c[y][x+1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
-          end
-        elsif(y > x) # 右下の|/
-          if c[y+1] && c[y+1][x] == 'x' && c[y][x+1] == 'x'
-            c[y][x] = '*' unless c[y][x] == 'x'
-          end
-        else # 右下の/の線
-          #
         end
       end
     end
   end
+  c.map!{|cc|cc.map!{|ccc|ccc == '*' ? 'x' : ccc}}
 end
 
 
@@ -132,14 +135,9 @@ n.times do |y|
 end
 
 
-# わかりやすくするのを戻す
-c = c[(n-gy)..-1] + c[0..(n-gy-1)]
-c.map!{|cc|
-  cc[(n-gx)..-1] + cc[0..(n-gx-1)]
-}
 
 
-if true
+if false
   p [gy,gx]
   puts '-'*n + "\n"
   puts c.map{|cc|
@@ -157,6 +155,12 @@ if true
   }.join("\n")
   puts '-'*n
   exit
+else
+  # わかりやすくするのを戻す
+  c = c[(n-gy)..-1] + c[0..(n-gy-1)]
+  c.map!{|cc|
+    cc[(n-gx)..-1] + cc[0..(n-gx-1)]
+  }
 end
 
 
@@ -173,8 +177,10 @@ n.times do |i|
     when '↓' then 'D'
     else next
     end
-    ans << [i,ii,r]
-    k += 1
+    if true || rand(3) != 0
+      ans << [i,ii,r]
+      k += 1
+    end
   end
 end
 # p ans

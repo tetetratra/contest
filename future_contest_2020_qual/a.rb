@@ -15,6 +15,7 @@ B.times do # ブロックます
   c[by][bx] = 'x'
 end
 
+
 # わかりやすくする
 c = c[gy..(-1)] + c[0..(gy-1)]
 c.map!{|cc|
@@ -30,12 +31,17 @@ n.times do |y|
           if c[y-1][x] == 'x' && c[y][x-1] == 'x'
             c[y][x] = '*' unless c[y][x] == 'x'
           end
-        elsif(x>y) # 左上の\|
+        elsif(x > y) # 左上の\|
+          if c[y-1][x] == 'x' && c[y][x-1] == 'x'
+            c[y][x] = '*' unless c[y][x] == 'x'
+          end
         else # 左上の\の線
         end
       else # 右上
         if (y < n-x) # 右上の/|
-          #
+          if c[y-1][x] == 'x' && c[y][x+1] == 'x'
+            c[y][x] = '*' unless c[y][x] == 'x'
+          end
         elsif(y > n-x) # 右上の|/
           if c[y-1][x] == 'x' && c[y][x+1] == 'x'
             c[y][x] = '*' unless c[y][x] == 'x'
@@ -47,13 +53,28 @@ n.times do |y|
     else
       if (0 <= x && x < n/2) # 左下
         if (y < n-x) # 左下の|/
-          #
+          if c[y+1] && c[y+1][x] == 'x' && c[y][x-1] == 'x'
+            c[y][x] = '*' unless c[y][x] == 'x'
+          end
         elsif(y > n-x) # 左下の/|
-          #
+          if c[y+1] && c[y+1][x] == 'x' && c[y][x-1] == 'x'
+            c[y][x] = '*' unless c[y][x] == 'x'
+          end
         else # 左下の/の線
           #
         end
       else # 右下
+        if (y < x) # 右下の\|
+          if c[y+1] && c[y+1][x] == 'x' && c[y][x+1] == 'x'
+            c[y][x] = '*' unless c[y][x] == 'x'
+          end
+        elsif(y > x) # 右下の|/
+          if c[y+1] && c[y+1][x] == 'x' && c[y][x+1] == 'x'
+            c[y][x] = '*' unless c[y][x] == 'x'
+          end
+        else # 右下の/の線
+          #
+        end
       end
     end
   end
@@ -69,11 +90,14 @@ n.times do |y|
           c[y][x] = '↑'
           c[y][x] = '←' if c[y-1][x] == 'x' || c[y-1][x] == '*'
         elsif(x>y) # 左上の\|
+          c[y][x] = '←'
+          c[y][x] = '↑' if c[y][x-1] == 'x' || c[y][x-1] == '*'
         else # 左上の\の線
         end
       else # 右上
         if (y < n-x) # 右上の/|
-          #
+          c[y][x] = '→'
+          c[y][x] = '↑' if c[y-1][x] == 'x' || c[y-1][x] == '*'
         elsif(y > n-x) # 右上の|/
           c[y][x] = '↑'
           c[y][x] = '→' if c[y-1][x] == 'x' || c[y-1][x] == '*'
@@ -87,7 +111,8 @@ n.times do |y|
           c[y][x] = '↓'
           c[y][x] = '←' if c[y+1] && (c[y+1][x] == 'x' || c[y+1][x] == '*')
         elsif(y > n-x) # 左下の/|
-          #
+          c[y][x] = '←'
+          c[y][x] = '↓' if c[y][x-1] == 'x' || c[y][x-1] == '*'
         else # 左下の/の線
           #
         end
@@ -95,8 +120,9 @@ n.times do |y|
         if (y < x) # 右下の\|
           c[y][x] = '↓'
           c[y][x] = '→' if c[y+1] && (c[y+1][x] == 'x' || c[y+1][x] == '*')
-        elsif(y > 2*n-x) # 右下の|/
-          #
+        elsif(y > x) # 右下の|/
+          c[y][x] = '→'
+          c[y][x] = '↓' if c[y][x+1] == 'x' || c[y][x+1] == '*'
         else # 右下の/の線
           #
         end
@@ -104,6 +130,14 @@ n.times do |y|
     end
   end
 end
+
+
+# わかりやすくするのを戻す
+c = c[(n-gy)..-1] + c[0..(n-gy-1)]
+c.map!{|cc|
+  cc[(n-gx)..-1] + cc[0..(n-gx-1)]
+}
+
 
 if true
   p [gy,gx]
@@ -126,11 +160,7 @@ if true
 end
 
 
-# わかりやすくするのを戻す
-c = c[gy..(-1)] + c[0..(gy-1)]
-c.map!{|cc|
-  cc[gx..(-1)] + cc[0..(gx-1)]
-}
+
 ########################
 ans = []
 k = 0

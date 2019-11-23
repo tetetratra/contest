@@ -46,11 +46,26 @@ class Integer
     u
   end
 
+  # 繰り返し二乗法
+  def repeat_squaring(p, mod = (10**9 + 7))
+    return 1 if p == 0
+    if p % 2 == 0
+      t = repeat_squaring(p/2, mod)
+      return t*t % mod
+    end
+    self * repeat_squaring(p - 1, mod) % mod
+  end
+
   alias :C :combination
   alias :P :permutation
   alias :! :factorial
 end
 
-p 4.!
-p 4.C(2)
-p 4.P(2)
+def repeat_squaring(n, p, mod = (10**9 + 7))
+  return 1 if p == 0
+  if p % 2 == 0
+    t = repeat_squaring(n, p/2, mod)
+    return t*t % mod
+  end
+  n * repeat_squaring(n, p - 1, mod) % mod
+end

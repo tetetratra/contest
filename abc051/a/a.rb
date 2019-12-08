@@ -1,12 +1,5 @@
 require 'pp'
-a, b, c = gets.split.map(&:to_i)
-d = gets.split.map(&:to_i)
-n = gets.to_i
-s = gets.chomp.chars
+sx, sy, tx, ty = gets.split.map(&:to_i)
 
-arr = []
-n.times do
-  arr << gets.to_i
-  arr << gets.split.map(&:to_i)
-  arr << gets.chomp.chars
-end
+c = Array.new(ty-sy){Array.new(tx-sx,false)}
+p c

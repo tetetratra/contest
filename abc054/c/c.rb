@@ -1,12 +1,21 @@
 require 'pp'
-a, b, c = gets.split.map(&:to_i)
-d = gets.split.map(&:to_i)
-n = gets.to_i
-s = gets.chomp.chars
+n, m = gets.split.map(&:to_i)
 
-arr = []
-n.times do
-  arr << gets.to_i
-  arr << gets.split.map(&:to_i)
-  arr << gets.chomp.chars
+nodes = Array.new(n){ {e: [], u: false} }
+
+m.times do
+  a, b = gets.split.map(&:to_i).map{|x|x-1}
+  nodes[a][:e] << b
+  nodes[b][:e] << a
 end
+
+routes = (0..(n-1)).to_a.permutation.to_a.select{|x| x[0] == 0}
+cnt = 0
+routes.each do |r|
+  f = true
+  r.each_cons(2) do |a,b|
+    f = false if !nodes[a][:e].any?{|x|x==b}
+  end
+  cnt += 1 if f
+end
+p cnt

@@ -1,11 +1,10 @@
 require 'pp'
-a, b, c = gets.split.map &:to_i
-n = gets.to_i
-s = gets.split(//)
-arr = []
-while g = gets
-  arr << g.to_i
-  arr << g.split.map(&:to_i)
-  arr << g.chars
+s = gets.chomp.chars.map(&:to_i)
+
+ans = nil
+s.each_cons(3) do |arr|
+  n = arr.join.to_i
+  ans = (n-753).abs if ans.nil? || ans > (n - 753).abs
 end
-p a,b,c,s,n
+p ans
+

@@ -65,32 +65,20 @@ n = gets.to_i
 cnt = 0
 
 sum = 0
-M = 4
+M = 10
 rs = []
 cnts = (1..M).map do |m|
-  cnt = 0
   [3,5,7].repeated_permutation(m) do |arr|
     cnt3 = arr.count(3)
     cnt5 = arr.count(5)
     cnt7 = arr.count(7)
     next if cnt3 == 0 || cnt5 == 0 || cnt7 == 0
     r =  arr.size.! / (cnt3.! * cnt5.! * cnt7.!)
-    cnt += r
-    rs << [cnt + sum, arr.join.to_i]
+    rs << arr.join.to_i
   end
-  sum += cnt
-  p [cnt, sum]
 end
-pp rs
+# pp rs
 
-
-ans = 0
-p n.to_s.chars.map(&:to_i).reverse
-n.to_s.chars.map(&:to_i).reverse.map.with_index do |i, ind|
-  ans += cnts[ind][0]
-end
-
-p ans
-
-
+# p n
+p rs.bsearch_index{|x|x > n}
 

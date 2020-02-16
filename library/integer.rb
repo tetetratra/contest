@@ -69,3 +69,42 @@ def repeat_squaring(n, p, mod = (10**9 + 7))
   end
   n * repeat_squaring(n, p - 1, mod) % mod
 end
+
+
+def newton(f, g, epsilon = 0.01, init_x = 0) # g = df/dx
+  x = init_x.to_f
+  loop do
+    x -= f.call(x) / g.call(x)
+    break if f.call(x).abs < epsilon
+  end
+  x
+end
+
+def secant(f, epsilon = 0.01, x = 0.2, prex = 0.1) # g = df/dx
+  x    = x.to_f
+  prex = prex.to_f
+  loop do
+    pre = x
+    x -= f.call(x) * ( (x - prex) / (f.call(x) - f.call(prex)) )
+    prex = pre
+    break if f.call(x).abs < epsilon
+  end
+  x
+end
+
+def bisection(f, epsilon = 0.01, x1 = 0.0, x2 = 10.0) # 解がx1とx2で挟まるように決める
+  x1 = x1.to_f
+  x2 = x2.to_f
+  x = (x1 + x2) / 2
+  loop do
+    x = (x1 + x2) / 2
+    if f.call(x1) * f.call(x) < 0
+      x2 = x
+    else
+      x1 = x
+    end
+    break if f.call(x).abs < epsilon
+  end
+  x
+end
+

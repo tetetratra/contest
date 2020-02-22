@@ -1,4 +1,4 @@
-cd ~/contest
+cd ~/Programming/contest
 mkdir $1 || exit
 cd $1
 

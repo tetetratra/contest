@@ -5,8 +5,7 @@ unless Dir.exist?('test')
   puts number  = Dir.pwd[%r{(?<=/)\w$}]
   url = "https://atcoder.jp/contests/#{contest}/tasks/#{contest}_#{number}"
   `oj d #{url}`
-  puts ["-" * 40] * 3 * "\n"
-  sleep 1
+  puts "-" * 40
 end
 
 puts `oj t -c "ruby main.rb"`

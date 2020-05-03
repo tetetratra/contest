@@ -1,15 +1,16 @@
+# abc115 C
 a, b, c = gets.split.map(&:to_i)
 n = gets.to_i
 d = gets.split.map(&:to_i)
 s = gets.chomp.chars
 s = gets.chomp.chars.map(&:to_i)
 
-c = n.times.map {
+c = n.times.map do
   gets.to_i
   gets.split.map(&:to_i)
   gets.chomp.chars
   x, y = gets.split.map(&:to_i)
-}
+end
 
 # ans = s.match?(//)
 

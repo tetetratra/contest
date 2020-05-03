@@ -1,3 +1,4 @@
 #! /bin/bash
-oj s -y main.rb
+
+oj s -y -w 0 main.rb
 

@@ -1,3 +1,18 @@
+class Integer
+  def divisor_list # 約数列挙
+    require 'prime'
+    list = []
+    d = ([1] + prime_division.flat_map { |x,n| [x] * n })
+    [true, false].repeated_permutation(d.size) do |arr|
+      r = 1
+      arr.each_with_index do |a, i|
+        r *= d[i] if a
+      end
+      list << r
+    end
+    list.uniq
+  end
+end
 
 class Integer
   @mod = nil

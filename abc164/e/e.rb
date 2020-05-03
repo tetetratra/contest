@@ -1,8 +1,9 @@
+# e
 a, b, c = gets.split.map(&:to_i)
 n = gets.to_i
 d = gets.split.map(&:to_i)
 s = gets.chomp.chars
-s = gets.chomp.chars.map(&:to_i)
+s = gets.chomp.map(&:to_i)
 
 c = []
 

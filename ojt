@@ -1,0 +1,14 @@
+#! /usr/bin/ruby
+
+unless Dir.exist?('test')
+  puts contest = Dir.pwd[%r{(?<=contest/).*(?=/)}]
+  puts number  = Dir.pwd[%r{(?<=/)\w$}]
+  url = "https://atcoder.jp/contests/#{contest}/tasks/#{contest}_#{number}"
+  `oj d #{url}`
+  puts ["-" * 40] * 3 * "\n"
+  sleep 1
+end
+
+puts `oj t -c "ruby main.rb"`
+
+

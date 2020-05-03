@@ -1,3 +1,4 @@
+# abc123 C
 a, b, c = gets.split.map(&:to_i)
 n = gets.to_i
 d = gets.split.map(&:to_i)
@@ -15,10 +16,10 @@ n.times do
   x, y = gets.split.map(&:to_i)
 end
 
-# ans = s.match?(//)
+ans = s.match?(//)
 
-# puts () ? 'Yes' : 'No'
-# puts () ? 'YES' : 'NO'
+puts () ? 'Yes' : 'No'
+puts () ? 'YES' : 'NO'
 
 # puts c.map{|x| x.map{|xx| format("%2d",xx) }.join }.join("\n")
 

@@ -24,4 +24,18 @@ echo "# $1 E" > e/main.rb
 
 cat ~/Programming/contest/library/main.rb | tee -a a/main.rb | tee -a b/main.rb | tee -a c/main.rb | tee -a d/main.rb >> e/main.rb
 
+touch a/main.cr
+touch b/main.cr
+touch c/main.cr
+touch d/main.cr
+touch e/main.cr
+
+echo "# $1 A" > a/main.cr
+echo "# $1 B" > b/main.cr
+echo "# $1 C" > c/main.cr
+echo "# $1 D" > d/main.cr
+echo "# $1 E" > e/main.cr
+
+cat ~/Programming/contest/library/main.cr | tee -a a/main.cr | tee -a b/main.cr | tee -a c/main.cr | tee -a d/main.cr >> e/main.cr
+
 echo "SET UP OK!!"

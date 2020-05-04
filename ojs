@@ -1,0 +1,4 @@
+#! /usr/bin/ruby
+
+`oj s -y main.rb`
+

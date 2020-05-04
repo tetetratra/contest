@@ -1,0 +1,4 @@
+[!] update available for online-judge-tools: 10.0.0 -> 10.0.1
+[!] update available for online-judge-api-client: 10.0.2 -> 10.0.6
+[*] run: $ pip3 install -U online-judge-tools
+[ERROR] unrecognizable file found: 2

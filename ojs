@@ -1,4 +1,0 @@
-#! /bin/bash
-
-oj s -y -w 0 main.rb
-

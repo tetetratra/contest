@@ -1,5 +1,6 @@
 #! /usr/bin/ruby
 
+
 unless Dir.exist?('test')
   puts contest = Dir.pwd[%r{(?<=contest/).*(?=/)}]
   puts number  = Dir.pwd[%r{(?<=/)\w$}]
@@ -8,6 +9,17 @@ unless Dir.exist?('test')
   puts "-" * 40
 end
 
-puts `oj t -c "ruby main.rb"`
+if ARGV.any?{|x|x == "cr"}
+  `oj t -c "crystal main.cr"`
+else
+  `oj t -c "ruby main.rb"`
+end
 
 
+if ARGV.any?{|x| x == "s"}
+  if ARGV.any?{|x|x == "cr"}
+    `oj s -y -w 3 main.cr`
+  else
+    `oj s -y -w 3 main.rb`
+  end
+end

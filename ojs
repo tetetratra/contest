@@ -1,4 +1,9 @@
 #! /usr/bin/ruby
 
-`oj s -y main.rb`
+n = 30
+(1..n).to_a.shuffle.each do |i|
+  puts ' ' * i + '@' + ' ' * (n - i)
+  sleep 0.01
+end
 
+`oj s -y main.rb`

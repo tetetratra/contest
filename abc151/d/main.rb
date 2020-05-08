@@ -1,22 +1,68 @@
 # abc151 D
-a, b, c = gets.split.map(&:to_i)
-n = gets.to_i
-d = gets.split.map(&:to_i)
-s = gets.chomp.chars
-s = gets.chomp.chars.map(&:to_i)
-
-c = n.times.map {
-  gets.to_i
-  gets.split.map(&:to_i)
+H, W = gets.split.map(&:to_i)
+s = H.times.map {
   gets.chomp.chars
-  x, y = gets.split.map(&:to_i)
 }
 
-# ans = s.match?(//)
+puts s.map{|x| x.join }.join("\n")
 
-# puts (ans) ? 'Yes' : 'No'
 
-# puts (ans) ? 'YES' : 'NO'
+u = Array.new(H) do
+  Array.new(W, false)
+end
 
-# puts c.map{|x| x.map{|xx| format("%2d",xx) }.join }.join("\n")
+def find_unused_cell(s)
+  sh = nil
+  sw = nil
+  catch true do
+    H.times do |hi|
+      W.times do |wi|
+        if s[hi][wi] == '.'
+          sh = hi
+          sw = wi
+          throw true
+        end
+      end
+    end
+  end
+  sh && sw ? [sh, sw] : nil
+end
+
+max = 0
+
+loop do
+  fuc = find_unused_cell(s)
+  break if fuc.nil?
+
+  p fuc
+  ### 最長距離の処理
+
+
+  ### usedにする処理
+  sh, sw = *fuc
+  stack = [ [sh, sw] ]
+  s[sh][sw] = "#"
+
+  until stack.empty?
+    sta = stack.pop
+    h, w = *sta
+    if 0 <= h-1 && s[h-1][w] == '.'
+      s[h-1][w] = "#"
+      stack << [h-1, w]
+    end
+    if h+1 < H && s[h+1][w] == '.'
+      s[h+1][w] = "#"
+      stack << [h+1, w]
+    end
+    if 0 <= w-1 && s[h][w-1] == '.'
+      s[h][w-1] = "#"
+      stack << [h, w-1]
+    end
+    if w+1 < W && s[h][w+1] == '.'
+      s[h][w+1] = "#"
+      stack << [h, w+1]
+    end
+  end
+end
+p max
 

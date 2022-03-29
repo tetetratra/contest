@@ -27,26 +27,20 @@ impl Solution {
     pub fn count_collisions(directions: String) -> i32 {
         // let size = directions.len();
         // let mut count = 0;
-        let v = directions.chars();
-        let vz = v.clone().zip(v);
-        println!("#{:?}", vz);
-        123
+        let len = directions.len();
+        let chars = directions.chars();
+        let f_l = chars.clone().take_while(|x| *x == 'L').count();
+        let e_r = chars.clone().rev().take_while(|x| *x == 'R').count();
+        let mut charsv = chars.collect::<Vec<char>>();
+        let d = f_l .. (len - e_r);
+        let chars2 = charsv.drain(d);
+        //println!("#{:?}", chars2);
+        chars2.filter(|x| *x != 'S').count() as i32
     }
-}
 
-fn tmp(_a: ()) {
-    println!("tmpppp");
-}
-fn tmp2(_a: ()) -> () {
-    println!("tmpppp");
-}
-fn tmp3() {
-    println!("tmpppp");
-}
-enum E {}
-fn tmp4(e: E) {
-    let a = match e {};
-    a
+    pub fn maximum_bob_points(num_arrows: i32, alice_arrows: Vec<i32>) -> Vec<i32> {
+        todo!()
+    }
 }
 
 fn main() {
@@ -54,13 +48,14 @@ fn main() {
     // println!("{:?}", Solution::count_hill_valley(nums));
     // let nums = vec![2, 3, 4, 2, 1, 1, 6, 5];
     // println!("{:?}", Solution::count_hill_valley(nums));
-    let m = main;
-    let t = tmp;
-    let t2 = tmp2;
-    let t3 = tmp3;
-    let t4 = tmp4;
-    let s = Solution::count_collisions;
 
-    let directions = "RLRSLL".to_string();
-    println!("{:?}", Solution::count_collisions(directions)); // 5
+    // let directions = "RLRSLL".to_string();
+    // println!("{:?}", Solution::count_collisions(directions)); // 5
+    // let directions = "LLRR".to_string();
+    // println!("{:?}", Solution::count_collisions(directions)); // 0
+
+    let numArrows = 9;
+    let aliceArrows = vec![1,1,0,1,0,0,2,1,0,1,2,0];
+    println!("{:?}", Solution::maximum_bob_points(numArrows, aliceArrows)); // [0,0,0,0,1,1,0,0,1,2,3,1]
+
 }
